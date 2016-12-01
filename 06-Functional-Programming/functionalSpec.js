@@ -41,7 +41,7 @@ describe("the function map", function() {
 // a function and filters the collection using that function.
 // If the function it's passed returns true for an element, 
 // it will keep the value, otherwise remove it from the array
-describe("filter", function() {
+describe("the function filter", function() {
 
   beforeEach(function() {
     spyOn(Array.prototype, 'filter').and.callThrough();
@@ -129,7 +129,7 @@ describe("the function reduce", function() {
 
 // Use reduce inside a sum function that takes an array of integers
 describe("the sum function", function() {
-  it("uses redcue to add up the numbers in an array", function() {
+  it("uses reduce to add up the numbers in an array", function() {
     spyOn(window, 'reduce').and.callThrough();
     expect(sum([1, 2, 3])).toEqual(6);
     expect(reduce).toHaveBeenCalled();
