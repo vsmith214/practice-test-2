@@ -1,63 +1,68 @@
-describe("Mammal class", function() {
+describe('Mammal class', function() {
   var myMammal;
 
   // Mammal is a constructor function
   beforeEach(function() {
-    myMammal = new Mammal("Joe");
+    myMammal = new Mammal('Joe');
   });
 
-  // myMammal is an instance of Mammal
-  it("should take name as a parameter", function() {
-    expect(myMammal.name).toEqual("Joe");
+  // myMammal is an INSTANCE of Mammal
+  it('`myMammal` is an instance of Mammal', function(){
+    expect(Object.getPrototypeOf(myMammal)).toEqual(Mammal.prototype);
   });
 
-  it("should have an array called offspring", function() {
+  it('should take name as a parameter', function() {
+    expect(myMammal.name).toEqual('Joe');
+  });
+
+  it('should have an array called offspring', function() {
     expect(myMammal.offspring).toEqual([]);
   });
-
-  // myMammal's prototype is the prototype of its contructor function which is Mammal.prototype
+  
+  // myMammal's internal prototype ([[Prototype]] || __proto__) is linked to Mammal.prototype
   it("should have a sayHello function on it's prototype", function() {
-    expect(myMammal.sayHello()).toEqual("My name is Joe, I'm a Mammal");
+    expect(myMammal.sayHello()).toEqual("My name is Joe!");
     // these functions should be on Mammal.prototype
-    expect(myMammal.hasOwnProperty("sayHello")).toEqual(false);
+    expect(myMammal.hasOwnProperty('sayHello')).toEqual(false);
   });
 
-  it("should have a haveBaby function", function() {
+  it('should have a haveBaby function', function() {
+    var child;
     child = myMammal.haveBaby();
-    expect(child.name).toEqual("Baby Joe");
+    expect(child.name).toEqual('Baby Joe');
     expect(myMammal.offspring).toEqual([child]);
 
     // these functions should be on Mammal.prototype
-    expect(myMammal.hasOwnProperty("haveBaby")).toEqual(false);
+    expect(myMammal.hasOwnProperty('haveBaby')).toEqual(false);
   });
 });
 
 
 // Cat instances inherit from Mammals, all the properties
 // Mammals have, Cat's will have as well.
-describe("Cat class", function() {
+describe('Cat class', function() {
   var cat;
 
   // Cat is a constructor function
   beforeEach(function() {
     spyOn(Mammal, 'call').and.callThrough();
-    cat = new Cat("Garfield", "yellow");
+    cat = new Cat('Garfield', 'yellow');
   });
 
   // Review how .call() and .apply() work.
-  it("calls the Mammal Constructor Function", function() {
+  it('calls the Mammal Constructor Function', function() {
     // Inside the Cat constructor function, you should also call `Mammal.call`
     // and use the Mammal constructor function to create the basic properties of a `Cat` instance
     expect(Mammal.call).toHaveBeenCalled();
   });
 
-  it("should have an array called offspring and name property from the Mammal constructor function", function() {
+  it('should have an array called offspring and name property from the Mammal constructor function', function() {
     expect(cat.offspring).toEqual([]);
-    expect(cat.name).toEqual("Garfield");
+    expect(cat.name).toEqual('Garfield');
   });
 
-  it("should have a color in its constructor function", function() {
-    expect(cat.color).toEqual("yellow");
+  it('should have a color in its constructor function', function() {
+    expect(cat.color).toEqual('yellow');
   });
   
   // Testing if new Mammal vs Object.create(Mammal) is used to set up the chain or inheritance
@@ -65,13 +70,13 @@ describe("Cat class", function() {
   // using the classical model, in the earlier videos we demonstrated how to chain prototypes with
   // Object.create() )
 
-  it("should use Object.create to inherit methods from Mammal", function() {
+  it('should use Object.create to inherit methods from Mammal', function() {
     expect(typeof Cat.prototype.sayHello).toEqual('function');
     expect(Cat.prototype.offspring).toEqual(undefined);
   });
 
   // What is the constructor property? We did not cover this in the lecture video.
-  it('should have its prototype object and a constructor property that points back to Cat', function() {
+  it('should have its prototype object and a constructor property reference the Cat constructor function', function() {
     expect(Cat.prototype.constructor).toEqual(Cat);
   });
 
@@ -79,18 +84,23 @@ describe("Cat class", function() {
   // Even though Cat inherits many of its properties from Mammal, we can override methods
   // to perform different actions (polymorphism).
   it("should have it's own haveBaby method that takes only a color", function() {
-    var greenCat = cat.haveBaby("green");
+    var greenCat = cat.haveBaby('green');
     expect(cat.offspring).toEqual([greenCat]);
-    expect(greenCat.name).toEqual("Baby Garfield");
-    expect(greenCat.color).toEqual("green");
+    expect(greenCat.name).toEqual('Baby Garfield');
+    expect(greenCat.color).toEqual('green');
 
   });
 
   // Research the constructor property
-  it("the cat haveBaby is actually a Cat and not a Mammal", function() {
-    var blueCat = cat.haveBaby("blue");
+  it('the cat haveBaby is actually a Cat and not a Mammal', function() {
+    var blueCat = cat.haveBaby('blue');
     expect(blueCat instanceof Cat).toEqual(true);
     expect(blueCat.constructor).toEqual(Cat);
+  });
+
+  it('an instance of `Cat` has access to `Mammal.prototype.sayHello` in its prototype chain', function(){
+    var redCat = new Cat('Garfield', 'red');
+    expect(redCat.sayHello()).toEqual('My name is Garfield!');
   });
 
 });
