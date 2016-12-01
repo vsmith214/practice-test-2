@@ -1,12 +1,10 @@
-//
+
 // Given some number, n, factorial should
 // compute n * (n-1) * (n-2) ... * 1
-///
-describe('factorial', function() {
-  //
+describe('the function factorial', function() {
+  
   // The iterative approach is probably the one you
   // are more familiar with--it involves looping.
-  ///
   describe('iterative approach', function() {
     it('correctly computes factorial', function() {
       var result = factorialIterative(10),
@@ -19,10 +17,9 @@ describe('factorial', function() {
       expect(factorialIterative.calls.count()).toEqual(1);
     });
   });
-  //
+  
   // A recursive function handles some base case and
   // otherwise calls itself with different arguments.
-  ///
   describe('recursive approach', function() {
     it('handles the base case', function() {
       expect(factorial(0)).toEqual(1);
@@ -32,9 +29,13 @@ describe('factorial', function() {
     });
     //
     // This is where we check that you've actually
-    // created a recursive function.
-    ///
+    // created a recursive function. We know it's 
+    // recursive if the function is called multiple times
     it('calls itself n + 1 times', function() {
+      // The number of times your function recurses
+      // will depend on how you construct your base case
+      // If you are getting a different number of factorial calls,
+      // Play around with your base case!
       spyOn(window, 'factorial').and.callThrough();
       var n = 5;
       factorial(n);
@@ -43,19 +44,16 @@ describe('factorial', function() {
   });
 });
 
-//
+
 // In the fibonacci sequence, the first and second
 // numbers are both equal to 1.
-//
+
 // Each following number is the sum of the previous two. 
 // For example, this means the third number should be 2.
-///
+
 describe('recursive fibonacci', function() {
   it('handles the base cases', function() {
-    //
-    // Remember, to programmers the first element of an 
-    // array is at index 0, the second at index 1, etc.
-    ///
+    //When n is 1 or 0, you know immediately what you should return!
     expect(fib(0)).toEqual(1);
     expect(fib(1)).toEqual(1);
   });
@@ -70,10 +68,11 @@ describe('recursive fibonacci', function() {
   it('correctly computes the 23rd fibonacci number', function() {
     expect(fib(22)).toEqual(28657);
   });
-  //
+
   // The following should pass if you've implemented your
-  // recursive solution properly.
-  ///
+  // recursive solution properly. Again, if you are getting a higher 
+  // number of calls, see if you can refactor your base case!
+  
   it('calls itself fib(n)*2-1 times', function() {
     spyOn(window, 'fib').and.callThrough();
     var n = 10;
@@ -82,6 +81,7 @@ describe('recursive fibonacci', function() {
   });
 });
 
+//Here we are creating many variables of different types
 var und = undefined,
   nll = null,
   bool = true,
@@ -91,13 +91,15 @@ var und = undefined,
   arr = [],
   obj = {};
 
-//
+
 // The 'type' function will behave a lot like JavaScript's 
 // typeof operator. See more here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof
-//
+
+// You shouldn't be using recursion for the type function. This is a utility function
+// That you will be using in the next recursive function
 // But don't use typeof in your solution!
-///
-describe('type', function() {
+
+describe('the utility function type', function() {
   it('returns the correct type of its input', function() {
     expect(type(und)).toEqual('Undefined');
     expect(type(nll)).toEqual('Null');
@@ -118,7 +120,7 @@ describe('type', function() {
     var bodyContainsTypeOf = /typeof/.test(commentsRemoved);
     expect(bodyContainsTypeOf).toBe(false);
   });
-  //
+  
   // Hmmm...if you can't use typeof what can you do?
   //
   // Well, go to a JS console and call .toString() on some object.
@@ -132,7 +134,7 @@ describe('type', function() {
   // Look into the .call method that every function has, and see
   // if you can figure out a way to make this happen. See the 
   // docs here: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call
-  ///
+  
   it('invokes "Object\'s" toString method', function() {
     spyOn(Object.prototype.toString, 'call').and.callThrough();
     type();
@@ -140,24 +142,21 @@ describe('type', function() {
   });
 });
 
-//
-// Stringify should convert anything into a string.
-///
-describe('stringify', function() {
-  //
+
+// Stringify should convert anything into a string
+describe('the function stringify', function() {
+  
   // We'll need different approaches for different types of
   // data, so it only makes sense that we'll use our very own
   // type function on stringify's input.
-  ///
   it('invokes our custom "type" function', function() {
     spyOn(window, 'type').and.callThrough();
     stringify(null);
     expect(type).toHaveBeenCalled();
   });
-  //
+  
   // Things that aren't Arrays and Objects we'll simply cast
   // into strings.
-  ///
   it('handles everything but Arrays and Objects', function() {
     expect(stringify(und)).toEqual('undefined');
     expect(stringify(nll)).toEqual('null');
@@ -166,6 +165,7 @@ describe('stringify', function() {
     expect(stringify(str)).toEqual('"abc"');
     expect(stringify(fnc)).toEqual('function () {}');
   });
+
   describe('on Arrays', function() {
     beforeEach(function() {
       spyOn(window, 'stringify').and.callThrough();
@@ -187,19 +187,19 @@ describe('stringify', function() {
         expected = '[1,"a",[true,"b",[null],"c"],3]';
       expect(result).toEqual(expected);
     });
-    //
+    
     // The native Array.prototype.toString method actually does
     // exactly what we want. But we'd like you to figure it out
     // yourself.
     //
     // You might find Array.prototype.join useful.
-    ///
     it('does not use native string conversion', function() {
       spyOn(Array.prototype, 'toString');
       stringify([1, 2, 3]);
       expect(Array.prototype.toString).not.toHaveBeenCalled();
     });
   });
+
   describe('on Objects', function() {
     it('invokes itself on each value', function() {
       var testObj = {
@@ -208,6 +208,8 @@ describe('stringify', function() {
       };
       spyOn(window, 'stringify').and.callThrough();
       stringify(testObj);
+      // If you are getting a much higher number of stringify calls, you
+      // may be calling stringify when you don't need to... 
       expect(stringify.calls.count()).toEqual(Object.keys(testObj).length + 1);
     });
     it('wraps with curly braces, inserts colons, and concatenates with commas', function() {
