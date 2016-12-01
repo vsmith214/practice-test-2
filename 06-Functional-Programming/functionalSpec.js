@@ -1,11 +1,13 @@
 
-// functions that iterate over collections and perform some function
+// In this spec, you will use Functional Programming concepts to create functions
+// that iterate over collections and perform some function. 
 
 // map takes an array, performs a function on each element
-// and returns an array with the result of that function
-describe("map", function() {
+// and returns an array that contains each transformed element
+describe("the function map", function() {
 
   beforeEach(function() {
+    //Here we are making sure that you don't use the built in Array#map method
     spyOn(Array.prototype, 'map').and.callThrough();
   });
 
@@ -14,22 +16,16 @@ describe("map", function() {
   });
 
   // Now let's use the `doubler` function and apply it over an
-  // entire array using the map object
-  //
-  // Observe here how we're not actually iterating, we're writng a function that handles
+  // entire array using a map function that we will create
+  
+  // Observe here how we're not actually iterating here, we're writing a function that handles
   // the looping so we can focus on higher-level code semantics
   it("takes our doubling function and applies it to an array", function() {
-
-    // the map function takes as a first element the array
-    // The second element is a function
-    // Then, internally it has to create a new array, run the function for each element and
-    // place it into the new array
     expect(map([1, 2, 3], doubler)).toEqual([2, 4, 6]);
   });
 
   it("takes a tripling function", function() {
-    // Here we create an anonymous function that triples, as long as we pass a function value
-    // map should work as we expect
+    // Here we create an anonymous function that triples and pass it into map
     expect(map([1, 2, 3], function(elem) {
       return elem * 3;
     })).toEqual([3, 6, 9]);
@@ -41,10 +37,11 @@ describe("map", function() {
   });
 });
 
-// filter takes an array (we can also call this a collection) and a function and filters the collection using that function
-// based on the boolean return value of the function.  If the function it's passed returns true, it will keep the value, otherwise
-// remove it from the array
-describe("filter", function() {
+// filter takes an array (we can also call this a collection) and 
+// a function and filters the collection using that function.
+// If the function it's passed returns true for an element, 
+// it will keep the value, otherwise remove it from the array
+describe("the function filter", function() {
 
   beforeEach(function() {
     spyOn(Array.prototype, 'filter').and.callThrough();
@@ -58,6 +55,7 @@ describe("filter", function() {
       return false;
   };
   
+  // `oddFilter` returns true if a number is odd
   var oddFilter = function(element) {
       return !evenFilter(element);
     };
@@ -78,7 +76,7 @@ describe("filter", function() {
 });
 
 // contains checks if a collection has an element that matches the second parameter's value
-describe("contains", function() {
+describe("the function contains", function() {
   it("should return true if a collection contains a user-specified value", function() {
     expect(contains([1, 2, 3], 2)).toEqual(true);
     expect(contains({
@@ -93,17 +91,18 @@ describe("contains", function() {
   });
 });
 
-describe("countWords - a utility function we'll need soon", function() {
+describe("the function countWords - a utility function we'll need soon", function() {
   it("counts words in a sentence separated by empty space", function() {
     expect(countWords("this is a sentence with 7 words")).toEqual(7);
   });
 });
 
-// `reduce` is the opposite of `map`.  It takes a collection and combines the values in the
+// Reduce takes a collection and combines the values in the
 // collection into a single value by defining a combination function.
-describe("reduce takes an array, starting point, and combining function and", function() {
+describe("the function reduce", function() {
   var wordArray;
   beforeEach(function() {
+    //You can't use the built in Array#reduce!
     spyOn(Array.prototype, 'reduce').and.callThrough();
   });
 
@@ -111,6 +110,7 @@ describe("reduce takes an array, starting point, and combining function and", fu
     var add = function(a, b) {
       return a + b;
     };
+    //Reduce is taking an array, starting value, and combining function
     expect(reduce([3, 5, 7], 0, add)).toEqual(15);
   });
 
@@ -128,8 +128,8 @@ describe("reduce takes an array, starting point, and combining function and", fu
 });
 
 // Use reduce inside a sum function that takes an array of integers
-describe("sums an array using reduce", function() {
-  it("adds up an array and reduce is called", function() {
+describe("the sum function", function() {
+  it("uses reduce to add up the numbers in an array", function() {
     spyOn(window, 'reduce').and.callThrough();
     expect(sum([1, 2, 3])).toEqual(6);
     expect(reduce).toHaveBeenCalled();
@@ -137,8 +137,13 @@ describe("sums an array using reduce", function() {
 });
 
 
-describe("every", function() {
+//These next two are very tricky!
+//The functions every and any **should use your reduce function**
+//to combine the collections into a true or false value.
+describe("the function every", function() {
 
+  //every asks 'does every element in this array pass the test given by the provided function?'
+  //If so, every should return true, otherwise false.
   beforeEach(function() {
     spyOn(Array.prototype, 'every').and.callThrough();
     spyOn(window, 'reduce').and.callThrough();
@@ -153,6 +158,7 @@ describe("every", function() {
   };
 
   it("should handle an empty set", function() {
+    //This gives a hint as to what your initial value for reduce should be...
     expect(every([], getValue)).toEqual(true);
   });
 
@@ -169,14 +175,15 @@ describe("every", function() {
     expect(Array.prototype.every.calls.any()).toEqual(false)
   });
 
-  it('should re-use reduce function created in previous specs', function(){
+  it('should re-use the reduce function created in previous specs', function(){
     every([0, 10, 28], isEven)
     expect(reduce).toHaveBeenCalled();
   });
 });
 
-describe("any", function() {
-
+describe("the function any", function() {
+  //any asks 'does at least one element in this array pass the test given by the provided function?'
+  //If so, any should return true, otherwise false.
   beforeEach(function() {
     spyOn(window, 'reduce').and.callThrough();
   });
@@ -197,7 +204,7 @@ describe("any", function() {
     expect(any([1, 10, 29], isEven)).toEqual(true);
   });
 
-  it('should re-use reduce function created in previous specs', function(){
+  it('should re-use the reduce function created in previous specs', function(){
     any([0, 10, 28], isEven)
     expect(reduce).toHaveBeenCalled();
   });
