@@ -1,5 +1,6 @@
 
-// In this spec, you will use Functional Programming concepts to create functions that iterate over collections and perform some function. 
+// In this spec, you will use Functional Programming concepts to create functions
+// that iterate over collections and perform some function. 
 
 // map takes an array, performs a function on each element
 // and returns an array that contains each transformed element
@@ -15,22 +16,16 @@ describe("the function map", function() {
   });
 
   // Now let's use the `doubler` function and apply it over an
-  // entire array using the map object
-  //
-  // Observe here how we're not actually iterating, we're writng a function that handles
+  // entire array using a map function that we will create
+  
+  // Observe here how we're not actually iterating here, we're writing a function that handles
   // the looping so we can focus on higher-level code semantics
   it("takes our doubling function and applies it to an array", function() {
-
-    // the map function takes an array as its first argument
-    // The second argument is a function
-    // Then, internally it has to create a new array, run the function for each element and
-    // place it into the new array
     expect(map([1, 2, 3], doubler)).toEqual([2, 4, 6]);
   });
 
   it("takes a tripling function", function() {
-    // Here we create an anonymous function that triples, as long as we pass a function value
-    // map should work as we expect
+    // Here we create an anonymous function that triples and pass it into map
     expect(map([1, 2, 3], function(elem) {
       return elem * 3;
     })).toEqual([3, 6, 9]);
@@ -43,7 +38,7 @@ describe("the function map", function() {
 });
 
 // filter takes an array (we can also call this a collection) and 
-// a function and filters the collection using that function
+// a function and filters the collection using that function.
 // If the function it's passed returns true for an element, 
 // it will keep the value, otherwise remove it from the array
 describe("filter", function() {
