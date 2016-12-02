@@ -18,7 +18,7 @@ Code written in a functional style strives to be modular, readable, and testable
 
 ###Section Overview
 
-- [06 Functional Overview]()
+- [06 Functional Overview](https://youtu.be/drRJBYm9q0Y)
 
 ###Curriculum Videos
 
