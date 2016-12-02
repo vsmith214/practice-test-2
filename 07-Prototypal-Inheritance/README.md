@@ -15,13 +15,7 @@ In the following exercise, you will leverage `Object.create` and constructor fun
 
 - [Prototypal-Inheritance Overview]()
 
-<br>
-<hr>
-
 ####Curriculum Videos
-
-<br>
-<hr>
 
 ###Additional Resources:
 
