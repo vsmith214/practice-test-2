@@ -22,9 +22,9 @@ Code written in a functional style strives to be modular, readable, and testable
 
 ###Curriculum Videos
 
-- [Introduction to Functional Programming]()
-- [Understanding Map]()
-- [Understanding Reduce]()
+- [Introduction to Functional Programming](http://www.youtube.com/watch?v=WXfc2qpfUdY)
+- [Understanding Map](http://www.youtube.com/watch?v=FeNexLV9VfI)
+- [Understanding Reduce](http://www.youtube.com/watch?v=43U38xqmHOI)
 
 ###Additional Resources:
 
