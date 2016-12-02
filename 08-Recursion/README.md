@@ -11,7 +11,7 @@ In the lecture videos we will review recursion, how to determine your base case,
 
 ###Section Overview 
 
-- [06-Recursion]()
+- [06-Recursion](https://youtu.be/yfoGatXO2Ns?list=PLx0iOsdUOUmlWIQt_FDWTOnHIvqGFx_rj)
 
 ###Curriculum Videos
 
