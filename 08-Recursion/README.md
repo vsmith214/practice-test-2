@@ -15,9 +15,9 @@ In the lecture videos we will review recursion, how to determine your base case,
 
 ###Curriculum Videos
 
-- [Introduction to Recursion]()
-- [Determining the Base Case]()
-- [Advanced Recursion]()
+- [Introduction to Recursion - Available 12/5 EOD]()
+- [Recursion Examples - Available 12/5 EOD]()
+- [Advanced Recursion - Available 12/5 EOD]()
 
 ###Additional Resources
 - [VisuAlgo Recursion Tree](https://visualgo.net/recursion)
