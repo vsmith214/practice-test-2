@@ -17,6 +17,8 @@ In the following exercise, you will leverage `Object.create` and constructor fun
 
 ####Curriculum Videos
 
+Curriculum Videos coming December 5th.
+
 ###Additional Resources:
 
 - [Pass by Reference vs Pass by Value](http://docstore.mik.ua/orelly/webprog/jscript/ch11_02.htm)
