@@ -13,7 +13,7 @@ In the following exercise, you will leverage `Object.create` and constructor fun
 
 ###Section Overview
 
-- [Prototypal-Inheritance Overview]()
+- [Prototypal-Inheritance Overview](https://youtu.be/TOo3IMeYBkA?list=PLx0iOsdUOUmlWIQt_FDWTOnHIvqGFx_rj)
 
 ####Curriculum Videos
 
