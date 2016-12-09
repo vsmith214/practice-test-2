@@ -17,7 +17,9 @@ In the following exercise, you will leverage `Object.create` and constructor fun
 
 ####Curriculum Videos
 
-Curriculum Videos coming December 5th.
+- [Constructor within a Constructor](https://youtu.be/_xAyUnWqrEI?list=PLx0iOsdUOUmmYnCWMV-TaIc4dEnWS8tlQ)
+- [Object.create and Prototype Chains](https://youtu.be/h7nicpRogPc?list=PLx0iOsdUOUmmYnCWMV-TaIc4dEnWS8tlQ)
+- [Prototype Chains and Methods](https://youtu.be/MhX6zSFScU8?list=PLx0iOsdUOUmmYnCWMV-TaIc4dEnWS8tlQ)
 
 ###Additional Resources:
 
