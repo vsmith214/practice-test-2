@@ -12,7 +12,7 @@ Let's warm up by learning to read tests and write code to match a test's expecta
 
 ## Setup
 
-To start, we need to fork the TestFirst-Part-1 repository and then clone the repository to our machine. Make sure that you have installed `testem`, a Node test-runner that will run your test and code.
+To start, we need to fork the TestFirst-Part-2 repository and then clone the repository to our machine. Make sure that you have installed `testem`, a Node test-runner that will run your test and code.
 
 
 ## Debugging Methods
