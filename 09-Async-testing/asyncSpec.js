@@ -169,7 +169,7 @@ describe('asyncMap', function() {
     
     var asyncFunc = function(song, callback) { 
       getRelatedArtistBySong(song, function(relatedArtist) {
-        callback({message: 'Something Went Wrong'}, null);
+        callback({message: 'Something Went Wrong'});
         //Instead of passing the result into our callback, we are simulating an error.  
       })
     };
