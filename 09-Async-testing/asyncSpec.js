@@ -1,149 +1,184 @@
 
-describe('threeSecondsLater', function() {
-  var value = 0;
-  var threelater;
+describe('oneSecondsLater', function() {
+  var myValue = 0;
+  var onelater;
 
   beforeEach(function(done) {
     time = Date.now()
     twoSecondsLater(function() {
-      value += 5;
-      threelater = Date.now()
+      myValue += 5;
+      onelater = Date.now()
       done();
+      //The done function tells our tests that the function in the beforeEach
+      //is asyncronous. Jasmine will WAIT until 'done()' is called before running
+      //any 'it' blocks, letting us test as if the code were synchronous. 
     })
   })
 
-  it('runs func passed in', function() {
-    expect(value).toEqual(5);
+  it('will run the function passed in as an argument.', function() {
+    expect(myValue).toEqual(5);
   })
 
-  it('takes 3 seconds', function() {
-    var diff = (threelater - time)/1000;
+  it('will wait 3 seconds before running passed in function', function() {
+    var diff = (onelater - time)/1000;
     expect(Math.floor(diff)).toEqual(2);
   })
 })
 
-describe('dataLookUp', function() {
-  var myData;
+describe('getBirthYearOfStarWarsCharacter', function() {
+  
+  var birthYear;
+  var R2D2Id = 3;
+  var C3POId = 2;
 
-  var dummyData = {
-    numberOfPeopleCurrentlyInSpace: 6
-  }
+  //Api call is: http://swapi.co/api/people/CHARACTER_ID
+  //You can see the documentation at http://swapi.co/
 
-  function getPeopleInSpace(cb) {
-    setTimeout(function() {
-      cb(null, dummyData);
-    },500)
-  }
+  //We don't need a beforeEach since we are making separate calls in each it block.
 
-  beforeEach(function(done) {
-    dataLookUp(getPeopleInSpace, function(err, data) {
-      myData = data;
+  it('takes a characterId and requests data about that character. Should set the variable birthYear to the birth year of the character.', function(done) {
+
+    getBirthYearOfStarWarsCharacter(R2D2Id, function(data) {
+      birthYear = data;
+      expect(birthYear).toEqual('33BBY');
       done();
-    })
-  }) 
-
-  xit('invokes the async function getPeopleInSpace', function() {
-    //should be easy but I can't figure out a way to do this. the spies
-    //seem to keep done from being called.
+    });
   })
 
-  it('extracts the number of people in space, and sets the number to data', function() {
-    expect(myData).toEqual(6);
+  it('works with different inputs', function(done) {
+    getBirthYearOfStarWarsCharacter(C3POId, function(data) {
+      birthYear = data;
+      expect(birthYear).toEqual('112BBY');
+      done();
+    });
   })
 
 });
 
-describe('asyncEach', function() {
+describe('getHomePlanetOfStarWarsCharacter', function() {
+  
+  var homePlanet;
+  var R2D2Id = 3;
+  var C3POId = 2;
 
-  var arr = [100, 200, 300, 50, 10, 150];
-  var total, count;
+  //Api call is: http://swapi.co/api/people/CHARACTER_ID
+  //You can see the documentation at http://swapi.co/
 
-  //We may want to change this to objects
-  var asyncFunc = function(elem, callback) { 
-    if(elem < 0) {
-      var err = {message: 'Number must be greater than 0'};
-      callback(err, null);
-    } else {
-      setTimeout(function() {
-        callback(null, elem); //doubles the elements value
-      }, elem); //setTimeout runs based on the element
-    }
-  };
+  //Study the results from the above api call and use that data to then request the home planet's data
 
-  beforeEach(function(done) {
-    total = 0;
-    count = 0;
+  //We don't need a beforeEach since we are making separate calls in each 'it' block.
 
-    asyncEach(arr, asyncFunc, function(err, result) {
-      total += result;
-      if(count++ === arr.length-1) done();
+  it('takes a characterId and requests data about that character. Uses that data to find the name of the character\'s homeworld', function(done) {
+
+    getHomePlanetOfStarWarsCharacter(R2D2Id, function(data) {
+      homePlanet = data;
+      expect(homePlanet).toEqual('Naboo');
+      done();
     });
   })
 
-  it('Runs the callback for the result of each async call for each element in the array', function() {
-    expect(total).toEqual(810);
+  it('works with different inputs', function(done) {
+    getHomePlanetOfStarWarsCharacter(C3POId, function(data) {
+      homePlanet = data;
+      expect(homePlanet).toEqual('Tatooine');
+      done();
+    });
   })
 
-  it('throws an error if the async function generates an error', function(done) {
-    var arrShouldGenerateErr = [100, -40, 300, -50, 10, 150];
-    var runCount = 0, errCount = 0;
-    asyncEach(arrShouldGenerateErr, asyncFunc, function(err, result) {
-      if(err) errCount++;
-      if(runCount++ === arrShouldGenerateErr.length-1) {
-        expect(errCount).toEqual(2);
-        done();
-      }
+});
+
+describe('getRelatedArtistsBySong', function() {
+  //For this call we will use the spotify Api
+  //To search for a song, use the url https://api.spotify.com/v1/search/?q={SONGTITLE_HERE}&type=track&limit=1
+  //You will get an array of one result
+  //Docs: https://developer.spotify.com/web-api/search-item/
+
+  //Once you find the song, you can use the song's artist Id to request a list of artists that are similar
+  //https://api.spotify.com/v1/artists/{ARTIST_ID}/related-artists
+  //You will get an array of results, use the first one
+  //DOCS: https://developer.spotify.com/web-api/get-related-artists/
+
+
+  it('takes a track title and gets an artist that\'s similar to the track\'s artist', function(done) {
+    //Chantaje by Shakira
+    getRelatedArtistBySong('Chantaje', function(relatedArtist) {
+      expect(relatedArtist).toEqual('Ricky Martin');
+      done();
     })
-  });
-    
+  })
+
+  it('works with different inputs', function(done) {
+    //Irreplaceable by Beyonce
+    getRelatedArtistBySong('Irreplaceable', function(relatedArtist) {
+      expect(relatedArtist).toEqual('Destiny\'s Child');
+      done();
+    })
+  })
+
+  it('can handle spaces in the track\'s title', function(done) {
+    //Hint: Have you ever seen '%20' in a url? That's a space!
+    //Yellow Submarine by The Beatles
+    getRelatedArtistBySong('Yellow Submarine', function(relatedArtist) {
+      expect(relatedArtist).toEqual('George Harrison');
+      done();
+    })
+  })
+
+
 })
 
 describe('asyncMap', function() {
-  var myValue;
+  var relatedArtistsArr;
+  
+  //The callback passed to asyncFunc is an error first callback
+  //meaning that it takes first an error (if any) and then the result
 
-  var asyncFunc = function(elem, callback) { 
-    if(elem < 0) {
-      var err = {message: 'Number must be greater than 0'};
-      callback(err, null);
-    } else {
-      setTimeout(function() {
-        callback(null, elem*2); //doubles the elements value
-      }, elem); //setTimeout runs based on the element
-    }
+  //These specs make use of getRelatedArtistBySong that you defined for the last group of specs
+  //If you are having mysterious troubles, please confirm that your solution for getRelatedArtistBySong is correct.
+
+  var asyncFunc = function(song, callback) { 
+    getRelatedArtistBySong(song, function(relatedArtist) {
+      callback(null, relatedArtist);
+    })
   };
 
-  var arr = [100, 200, 300, 50, 10, 150];
+  var songArr = ['Umbrella', 'Teardrops on my guitar', 'Thriller', 'Defying Gravity', 'Jolene', 'Drive By', 'La Camisa Negra'];
 
   beforeEach(function(done) {
-    asyncMap(arr, asyncFunc, function(err, result) {
-      myValue = result;
+    asyncMap(songArr, asyncFunc, function(err, resultingArr) { //Error first callback that will be passed to asyncFunc
+      relatedArtistsArr = resultingArr;
       done();
     })
   })
 
   it('creates an array of the mapped values generated by the async function, and passes that array into the given callback', function() {
-    expect(myValue.length).toEqual(6);
+    expect(relatedArtistsArr.length).toEqual(7);
   })
 
-  it('the array is in the order that each async call finishes, and each element has doubled', function() {
-    expect(myValue).toEqual([20, 100, 200, 300, 400, 600]);
+  it('the array contains the artists that are mostly closely related to the artist of the given song ', function() {
+    expect(relatedArtistsArr.indexOf('Country Road Band')).toBeGreaterThan(-1);
+    expect(relatedArtistsArr.indexOf('Dierks Bentley')).toBeGreaterThan(-1);
+    expect(relatedArtistsArr.indexOf('Bacilos')).toBeGreaterThan(-1);
+  })
+
+  it('the array contains the related artists IN ORDER.', function() {
+    expect(relatedArtistsArr).toEqual(['The Pussycat Dolls', 'Country Road Band', 'Lionel Richie', 'Dierks Bentley', 'Reba McEntire', 'Rob Thomas', 'Bacilos']);
   })
 
   it('throws an error if the async function generates an error', function(done) {
-    var arrShouldGenerateErr = [100, -40, 300, 50, 10, 150];
-    asyncMap(arrShouldGenerateErr, asyncFunc, function(err, result) {
-      expect(err.message).toEqual('Number must be greater than 0');
+    
+    var asyncFunc = function(song, callback) { 
+      getRelatedArtistBySong(song, function(relatedArtist) {
+        callback({message: 'Something Went Wrong'}, null);
+        //Instead of passing the result into our callback, we are simulating an error.  
+      })
+    };
+
+    asyncMap(songArr, asyncFunc, function(err, resultingArr) {
+      expect(err.message).toEqual('Something Went Wrong');
       done();
     })
+
   });
   
 })
-
-
-
-// describe('thunking pattern', function() {
-
-// })
-
-
-
