@@ -3,7 +3,7 @@
   "src_files": [
     "**/*.js"
   ], 
-  "test_page": "index.html",
+  "test_page": "testem.html",
   "src_files_ignore": [
     "node_modules/**/*",
     "gulpfile.js"
