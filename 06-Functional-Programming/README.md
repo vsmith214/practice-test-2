@@ -1,7 +1,7 @@
-#06_Functional
+# 06_Functional
 <hr>
 
-###Overview
+### Overview
 
 Functional programming is another form of programming that is different than an Object Oriented Style used in earlier test specs. Functional programming emphasizes the use of functions as the primary programming construct, as opposed to OOP, which emphasizes the use of objects. Because of this, Functional Programming often makes use of Higher Order Functions! 
 
@@ -16,16 +16,16 @@ Code written in a functional style strives to be modular, readable, and testable
 
 <hr>
 
-###Section Overview
+### Section Overview
 
 - [06 Functional Overview](https://youtu.be/drRJBYm9q0Y)
 
-###Curriculum Videos
+### Curriculum Videos
 
 - [Introduction to Functional Programming](http://www.youtube.com/watch?v=WXfc2qpfUdY)
 - [Understanding Map](http://www.youtube.com/watch?v=FeNexLV9VfI)
 - [Understanding Reduce](http://www.youtube.com/watch?v=43U38xqmHOI)
 
-###Additional Resources:
+### Additional Resources:
 
 - [EJ: Higher Order Functions](http://eloquentjavascript.net/05_higher_order.html)
