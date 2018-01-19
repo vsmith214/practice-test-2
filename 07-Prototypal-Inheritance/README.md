@@ -20,4 +20,4 @@ In the following exercise, you will leverage `Object.create` and constructor fun
 - [Object.create()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
 - [Chaining objects prototypes with Object.create()](http://eli.thegreenplace.net/2013/10/22/classical-inheritance-in-javascript-es5)
 - [Object Playground](http://www.objectplayground.com/)
-- [A Plain English Guide to JavaScript Prototypes](A Plain English Guide to JavaScript Prototypes)
+
